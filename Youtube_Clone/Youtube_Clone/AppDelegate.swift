@@ -14,14 +14,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         let layout = UICollectionViewFlowLayout()
         window?.rootViewController = UINavigationController(rootViewController:  HomeController(collectionViewLayout: layout))
-        
+        UINavigationBar.appearance().barTintColor = UIColor(red: 230/255, green: 32/255, blue: 31/255, alpha: 1)
+        let statusBarBk = UIView()
+        statusBarBk.backgroundColor = UIColor.setRgp(red: 194, green: 31, blue: 31, alpha: 1)
+        statusBarBk.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 20)
+        window?.addSubview(statusBarBk)
         return true
     }
 

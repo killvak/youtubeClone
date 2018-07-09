@@ -8,13 +8,27 @@
 
 import UIKit
 
+
+extension UIViewController {
+    
+    func setupNavigationLabel(title : String, color : UIColor, fontSize : CGFloat)  {
+        let lbl =  UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width - 12, height: view.frame.height))
+        lbl.text = title
+        lbl.textColor = color
+        lbl.font = UIFont.systemFont(ofSize: fontSize)
+        navigationItem.titleView = lbl
+        
+    }
+}
 class HomeController: UICollectionViewController , UICollectionViewDelegateFlowLayout {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.collectionView?.backgroundColor = .white
-        
+       
+        setupNavigationLabel(title: "Home", color: .white,fontSize: 16)
+        self.navigationController?.navigationBar.isTranslucent = false
         self.collectionView?.register(VideoCell.self, forCellWithReuseIdentifier: "cellid")
     }
 
@@ -25,7 +39,7 @@ class HomeController: UICollectionViewController , UICollectionViewDelegateFlowL
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 6
     }
     
     
@@ -36,45 +50,16 @@ class HomeController: UICollectionViewController , UICollectionViewDelegateFlowL
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.view.frame.width, height: 200)
+        let height = ((self.view.frame.width - 16) * 9/16 ) + 63
+        return CGSize(width: self.view.frame.width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
 
     
 }
-// 15:48
-class VideoCell : UICollectionViewCell {
-    
-    let videoImgV : UIImageView = {
-       let imV = UIImageView()
-        imV.backgroundColor = .red
-        return imV
-    }()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupViews()
-    }
-    
-    
-    
-    func setupViews() {
-        self.backgroundColor = .purple
-        
-        self.videoImgV.frame = self.frame
-        self.addSubview(videoImgV)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("Init coder has been implemented")
-    }
-    
-}
-
-
-
-
-
-
 
 
 
