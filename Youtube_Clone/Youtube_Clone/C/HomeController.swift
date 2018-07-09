@@ -9,19 +9,13 @@
 import UIKit
 
 
-extension UIViewController {
-    
-    func setupNavigationLabel(title : String, color : UIColor, fontSize : CGFloat)  {
-        let lbl =  UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width - 12, height: view.frame.height))
-        lbl.text = title
-        lbl.textColor = color
-        lbl.font = UIFont.systemFont(ofSize: fontSize)
-        navigationItem.titleView = lbl
-        
-    }
-}
-class HomeController: UICollectionViewController , UICollectionViewDelegateFlowLayout {
+class HomeController: UICollectionViewController  {
 
+    let menuBar : UIMenuBarView = {
+        let mb = UIMenuBarView()
+        return mb
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -30,14 +24,25 @@ class HomeController: UICollectionViewController , UICollectionViewDelegateFlowL
         setupNavigationLabel(title: "Home", color: .white,fontSize: 16)
         self.navigationController?.navigationBar.isTranslucent = false
         self.collectionView?.register(VideoCell.self, forCellWithReuseIdentifier: "cellid")
+        
+        menuBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
+        self.view.addSubview(menuBar)
+        self.collectionView.frame = CGRect(x: 0, y: 50, width: view.frame.width, height: self.collectionView.frame.height)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+   
 
 
+}
+
+
+
+
+
+
+
+extension HomeController  :  UICollectionViewDelegateFlowLayout {
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 6
     }
@@ -45,7 +50,7 @@ class HomeController: UICollectionViewController , UICollectionViewDelegateFlowL
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellid", for: indexPath)
-//        cell.backgroundColor = .red
+        //        cell.backgroundColor = .red
         return cell
     }
     
@@ -57,13 +62,6 @@ class HomeController: UICollectionViewController , UICollectionViewDelegateFlowL
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-
+    
     
 }
-
-
-
-
-
-
-
