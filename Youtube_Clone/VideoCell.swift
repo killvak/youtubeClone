@@ -40,12 +40,32 @@ class VideoCell : UICollectionViewCell {
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
+    
+    func configCell(video : Video) {
+        titleLbl.text = video.title
+        if let title =  video.title  {
+            let size = CGSize(width: frame.width - 190, height: 1000)
+            let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+            let estimatedRect = NSString(string: title).boundingRect(with: size, options: options, attributes: [kCTFontAttributeName as NSAttributedString.Key:UIFont.systemFont(ofSize: 14)], context: nil)
+            if estimatedRect.size.height > 18 {
+                titleLblHeight?.constant =  40 //estimatedRect.size.height
+            }else {
+                titleLblHeight?.constant = 18
+            }
+        }
+        
+    }
+    var titleLblHeight: NSLayoutConstraint?
+    
     let titleLbl : UILabel = {
         
         let lbl = UILabel()
-        //        lbl.backgroundColor = .yellow
+        lbl.backgroundColor = .yellow
         lbl.text = "Creative Mind Channel"
         lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.numberOfLines = 2
+        lbl.minimumScaleFactor = 0.8
+        lbl.adjustsFontSizeToFitWidth = true
         return lbl
     }()
     let aboutLbl : UILabel = {
@@ -54,12 +74,14 @@ class VideoCell : UICollectionViewCell {
         lbl.text = " All you need to know that we have 1,000,000 Viewer"
         lbl.font = UIFont.systemFont(ofSize: 11)
         lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.numberOfLines = 2
         return lbl
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
+        self.clipsToBounds = false
     }
     
     
@@ -75,9 +97,11 @@ class VideoCell : UICollectionViewCell {
     private func setupImgV() {
         self.addSubview(videoImgV)
         videoImgV.topAnchor.constraint(equalTo: self.topAnchor, constant: 8).isActive = true
-        videoImgV.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -55).isActive = true
+//        videoImgV.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -55).isActive = true
         videoImgV.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8).isActive = true
         videoImgV.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8).isActive = true
+        let height = ( self.frame.height  * 9/16 ) + 35
+        videoImgV.heightAnchor.constraint(equalToConstant: height).isActive = true
         
         self.addSubview(profileImgV)
         profileImgV.topAnchor.constraint(equalTo: videoImgV.bottomAnchor, constant: 3).isActive = true
@@ -90,10 +114,11 @@ class VideoCell : UICollectionViewCell {
         titleLbl.topAnchor.constraint(equalTo: videoImgV.bottomAnchor, constant: 3).isActive = true
         titleLbl.leadingAnchor.constraint(equalTo: profileImgV.trailingAnchor, constant: 8).isActive = true
         titleLbl.trailingAnchor.constraint(equalTo: videoImgV.trailingAnchor, constant: -15).isActive = true
-        titleLbl.heightAnchor.constraint(equalToConstant: 18).isActive = true
+        titleLblHeight = titleLbl.heightAnchor.constraint(equalToConstant: 18)
+        titleLblHeight?.isActive = true
         
         self.addSubview(seprator)
-        seprator.topAnchor.constraint(equalTo: profileImgV.bottomAnchor, constant: 3).isActive = true
+        seprator.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 3).isActive = true
         seprator.leadingAnchor.constraint(equalTo: videoImgV.leadingAnchor, constant: -15).isActive = true
         seprator.trailingAnchor.constraint(equalTo: videoImgV.trailingAnchor, constant: 15).isActive = true
         seprator.heightAnchor.constraint(equalToConstant: 1).isActive = true
@@ -102,8 +127,8 @@ class VideoCell : UICollectionViewCell {
         aboutLbl.topAnchor.constraint(equalTo: titleLbl.bottomAnchor, constant: 3).isActive = true
         aboutLbl.leadingAnchor.constraint(equalTo: profileImgV.trailingAnchor, constant: 8).isActive = true
         aboutLbl.trailingAnchor.constraint(equalTo: videoImgV.trailingAnchor, constant: -15).isActive = true
-        //        aboutLbl.heightAnchor.constraint(equalToConstant: 18).isActive = true
-        aboutLbl.bottomAnchor.constraint(equalTo: seprator.topAnchor, constant: -5).isActive = true
+                aboutLbl.heightAnchor.constraint(equalToConstant: 18).isActive = true
+//        aboutLbl.bottomAnchor.constraint(equalTo: seprator.topAnchor, constant: -5).isActive = true
         
         
         

@@ -15,6 +15,7 @@ class HomeController: UICollectionViewController  {
         let mb = UIMenuBarView()
         return mb
     }()
+    var videos : [Video] = [Video(title: "Some Crazy Shit Gotta Happen Here Dude so Suit up and a]sdla kldk;as lkda;lklkldflkfd kldfkl sklfds klsdfkl kl")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +28,9 @@ class HomeController: UICollectionViewController  {
         
         menuBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
         self.view.addSubview(menuBar)
-        self.collectionView.frame = CGRect(x: 0, y: 50, width: view.frame.width, height: self.collectionView.frame.height)
+//        self.collectionView.frame = CGRect(x: 0, y: 50, width: view.frame.width, height: self.collectionView.frame.height)
+        self.collectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
+        self.collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
     }
 
    
@@ -44,18 +47,19 @@ class HomeController: UICollectionViewController  {
 extension HomeController  :  UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return videos.count
     }
     
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellid", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellid", for: indexPath) as! VideoCell
         //        cell.backgroundColor = .red
+        cell.configCell(video: videos[indexPath.row])
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let height = ((self.view.frame.width - 16) * 9/16 ) + 63
+        let height = ((self.view.frame.width - 16) * 9/16 ) + 89
         return CGSize(width: self.view.frame.width, height: height)
     }
     
