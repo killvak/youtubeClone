@@ -29,11 +29,24 @@ class HomeController: UICollectionViewController  {
         menuBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
         self.view.addSubview(menuBar)
 //        self.collectionView.frame = CGRect(x: 0, y: 50, width: view.frame.width, height: self.collectionView.frame.height)
-        self.collectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
-        self.collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
+        self.collectionView?.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
+        self.collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
+        
+        fetchVideos()
     }
 
-   
+    func fetchVideos() {
+        
+        DataModelRequests().getData(success: { dataa in
+        
+            self.videos = dataa
+            self.collectionView?.reloadData()
+        }) {
+            
+            
+        }
+        
+    }
 
 
 }

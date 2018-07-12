@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import Alamofire
+import AlamofireImage
 // 15:48
 class VideoCell : UICollectionViewCell {
     
@@ -46,7 +48,7 @@ class VideoCell : UICollectionViewCell {
         if let title =  video.title  {
             let size = CGSize(width: frame.width - 190, height: 1000)
             let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-            let estimatedRect = NSString(string: title).boundingRect(with: size, options: options, attributes: [kCTFontAttributeName as NSAttributedString.Key:UIFont.systemFont(ofSize: 14)], context: nil)
+            let estimatedRect = NSString(string: title).boundingRect(with: size, options: options, attributes: [kCTFontAttributeName as NSAttributedStringKey:UIFont.systemFont(ofSize: 14)], context: nil)
             if estimatedRect.size.height > 18 {
                 titleLblHeight?.constant =  40 //estimatedRect.size.height
             }else {
@@ -54,6 +56,23 @@ class VideoCell : UICollectionViewCell {
             }
         }
         
+        
+        // AlamofireImage 3
+        if let sUrl = video.thumpnilImg  , let url = URL(string: sUrl ) {
+        videoImgV.af_setImage(
+            withURL: url,
+            placeholderImage: UIImage(named: "logo-1"),
+            filter: nil
+        )
+        }
+        if let sUrl = video.channel?.profileImg  , let url = URL(string: sUrl ) {
+            profileImgV.af_setImage(
+                withURL: url,
+                placeholderImage: UIImage(named: "logo-1"),
+                filter: nil
+            )
+        }
+       
     }
     var titleLblHeight: NSLayoutConstraint?
     
